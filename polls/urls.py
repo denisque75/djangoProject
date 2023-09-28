@@ -12,5 +12,7 @@ urlpatterns = [
     # path("rest/", rest_views.question_list),
     # path("rest/<int:pk>", rest_views.question_details)
     path("rest/", rest_views.QuestionList.as_view()),
-    path("rest/<int:pk>", rest_views.QuestionDetails.as_view())
+    path("rest/<int:pk>", rest_views.QuestionDetails.as_view()),
+    path('users/', rest_views.UserList.as_view()),
+    path('users/<int:pk>/', rest_views.UserDetail.as_view()),
 ]
