@@ -45,22 +45,25 @@ Model serializing
 """
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
     choice_list = serializers.SerializerMethodField()
+    creator = serializers.ReadOnlyField(source="creator.username")
+
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'pub_date', 'was_published_recently', 'choice_list']
+        fields = ['id', 'question_text', 'pub_date', 'was_published_recently', 'choice_list', 'creator']
         ordering_by = 'id'
     
     def get_choice_list(self, instance: Question):
         choice_list = instance.choice_set.filter(question = 1)
-        print(choice_list)
-        print('\n\n\n\n\nNew Line')
         return ChoiceSerializer(choice_list, many=True, context=self.context).data
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    questions = serializers.PrimaryKeyRelatedField(many=True, queryset=Question.objects.all())
+
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        # fields = ['url', 'username', 'email', 'groups']
+        fields = ['id', 'username', 'questions']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

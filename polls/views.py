@@ -7,8 +7,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions
 from .serializers import UserSerializer, GroupSerializer, QuestionSerializer
 
 from .models import Choice, Question

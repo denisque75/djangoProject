@@ -9,6 +9,8 @@ from django.contrib import admin
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
+    creator = models.ForeignKey('auth.User', related_name='questions', on_delete=models.CASCADE)
+    highlighted = models.TextField()
 
     @admin.display(
         boolean=True,
